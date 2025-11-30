@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Filters";
+}
+
+<div class="container-fluid p-4">
+    <h2 class="mb-4">Filters</h2>
+
+    <div id="categoriesContainer" class="row mb-4">
+        <p class="text-muted">Loading categories...</p>
+    </div>
+
+    <h4>Date Range</h4>
+    <div id="dateRangeContainer" class="mb-4">
+        <p class="text-muted">Loading date range presets...</p>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", loadFilters);
+
+        async function loadFilters() {
+            try {
+                // Use your controller endpoint instead of direct file path
+                const response = await fetch('@Url.Action("GetFilters", "Filters")');
+                const data = await response.json();
+
+                // Render categories
+                let categoriesHtml = '';
+                data.Categories.forEach(c => {
+                    categoriesHtml += `
+                        <div class="col-md-3 mb-3">
+                            <div class="card h-100 shadow-sm" style="border-left: 5px solid ${c.Color};">
+                                <div class="card-body">
+                                    <!-- Font Awesome icon -->
+                                    <h5 class="card-title">
+                                        <i class="fas fa-${c.Icon} me-2"></i>${c.Name}
+                                    </h5>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="cat${c.Name}">
+                                        <label class="form-check-label" for="cat${c.Name}">
+                                            Apply Category
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                document.getElementById("categoriesContainer").innerHTML = categoriesHtml;
+
+                // Render date range presets
+                let dateHtml = '';
+                data.DateRangePresets.forEach(d => {
+                    dateHtml += `<button class="btn btn-outline-primary me-2 mb-2" data-value="${d.Value}">${d.Label}</button>`;
+                });
+                document.getElementById("dateRangeContainer").innerHTML = dateHtml;
+
+            } catch (e) {
+                console.error(e);
+                document.getElementById("categoriesContainer").innerHTML = `<p class="text-danger">Failed to load categories.</p>`;
+                document.getElementById("dateRangeContainer").innerHTML = `<p class="text-danger">Failed to load date ranges.</p>`;
+            }
+        }
+    </script>
+}

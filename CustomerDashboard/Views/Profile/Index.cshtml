@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Customer Profile";
+}
+
+<div class="container mt-4">
+    <h2>Customer Profile</h2>
+    <div id="profile-container">Loading...</div>
+</div>
+
+<script>
+    $(function ()
+    {
+        $.get('@Url.Action("GetProfile", "Profile")')
+        .done(function (data)
+        {
+            $("#profile-container").html(`
+                <div class="card shadow-sm" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">${data.Name}</h5>
+                        <p class="card-text"><strong>Email:</strong> ${data.Email}</p>
+                        <p class="card-text"><strong>Account Type:</strong> ${data.AccountType}</p>
+                        <p class="card-text"><strong>Total Spent:</strong> ${data.Currency} ${data.TotalSpent}</p>
+                    </div>
+                </div>
+            `);
+        })
+        .fail(function ()
+        {
+            $("#profile-container").html("<p class='text-danger'>Failed to load profile data.</p>");
+        });
+    });
+</script>

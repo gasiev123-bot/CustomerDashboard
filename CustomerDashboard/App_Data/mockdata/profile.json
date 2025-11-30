@@ -1,0 +1,8 @@
+{
+  "customerId": "12345",
+  "name": "John Doe",
+  "email": "john.doe@email.com",
+  "accountType": "premium",
+  "totalSpent": 15420.50,
+  "currency": "ZAR"
+}

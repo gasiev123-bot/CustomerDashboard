@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Spending Summary";
+}
+
+<h2>Spending Summary</h2>
+<div id="summary-container">Loading...</div>
+
+<script>
+     $(function () {
+     $.get('@Url.Action("GetSummary", "Summary")') 
+     .done(function (data) {
+         $("#summary-container").html(`
+            <div class="card shadow-sm" style="width: 18rem;">
+               <div class="card-body">
+                    <p class="card-text"><strong>Total Spent:</strong> ${data.TotalSpent}</p>
+                    <p class="card-text"><strong>Transactions:</strong> ${data.TransactionCount}</p>
+                    <p class="card-text"><strong>Average:</strong> ${data.AverageTransaction}</p>
+                    <p class="card-text"><strong>Top Category:</strong> ${data.TopCategory}</p>
+                </div>
+            </div>
+            `);
+        });
+    });
+</script>

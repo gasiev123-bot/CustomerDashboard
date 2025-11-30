@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Categories";
+}
+
+<h2>Categories</h2>
+<div id="cat-container" class="row">Loading...</div>
+
+<script>
+$(function () {
+    $.get('@Url.Action("GetCategories", "Categories")')
+       .done(function (data) {
+            let html = "";
+
+            data.Categories.forEach(c => {
+                html += `
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm h-100" style="border-left: 5px solid ${c.Color};">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-${c.Icon} me-2"></i>${c.Name}
+                                </h5>
+                                <p class="card-text"><strong>Amount:</strong> ${c.Amount.toFixed(2)}</p>
+                                <p class="card-text"><strong>Percent:</strong> ${c.Percentage.toFixed(1)}%</p>
+                                <p class="card-text"><strong>Transactions:</strong> ${c.TransactionCount}</p>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+
+            $("#cat-container").html(html);
+        })
+       .fail(function () {
+            $("#cat-container").html('<p class="text-danger">Failed to load categories.</p>');
+        });
+});
+</script>

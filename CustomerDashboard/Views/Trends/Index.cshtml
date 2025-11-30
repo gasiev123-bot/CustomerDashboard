@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Monthly Trends";
+}
+<h2>Monthly Trends</h2>
+<canvas id="trendChart" height="120"></canvas>
+
+<script>
+
+$(function () {
+    $.get('@Url.Action("GetTrends", "Trends")')
+        .done(function (data) {
+            const labels = data.Trends.map(t => t.Month);
+            const values = data.Trends.map(t => t.TotalSpent);
+
+            new Chart(document.getElementById("trendChart"), {
+                type: "line",
+                data: {
+                    labels,
+                    datasets: [{
+                        label: "Total Spent",
+                        data: values,
+                        borderColor: "#007bff",
+                        backgroundColor: "rgba(0,123,255,0.2)",
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        })
+        .fail(function () {
+            alert("Failed to load trends data.");
+        });
+});
+</script>

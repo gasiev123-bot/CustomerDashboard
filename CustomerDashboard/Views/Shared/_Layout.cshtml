@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Customer Dashboard</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome/css/all.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/chart.umd.min.js"></script>
+
+    <style>
+        .gradient-custom-2 {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+    </style>
+
+    <script>
+
+        window.onpopstate = function () {
+
+        fetch('@Url.Action("Logout", "Auth")', { method: 'POST' })
+            .then(() => {
+
+                window.location.href = '@Url.Action("Login", "Auth")';
+            })
+            .catch(() => {
+
+                window.location.href = '@Url.Action("Login", "Auth")';
+            });
+    };
+
+    window.history.pushState({}, '');
+    window.onload = function () {
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.location.href = '@Url.Action("Login","Auth")';
+            };
+        }
+    };
+    </script>
+
+</head>
+
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <div class="col-2 gradient-custom-2 text-white vh-100 p-3 d-flex flex-column">
+                <h4 class="text-center mb-4">Dashboard</h4>
+
+                <a href="@Url.Action("Index", "Profile")" class="btn btn-outline-light w-100 mb-2">Customer Profile</a>
+                <a href="@Url.Action("Index", "Summary")" class="btn btn-outline-light w-100 mb-2">Spending Summary</a>
+                <a href="@Url.Action("Index", "Categories")" class="btn btn-outline-light w-100 mb-2">Categories</a>
+                <a href="@Url.Action("Index", "Transactions")" class="btn btn-outline-light w-100 mb-2">Transactions</a>
+                <a href="@Url.Action("Index", "Goals")" class="btn btn-outline-light w-100 mb-2">Goals</a>
+                <a href="@Url.Action("Index", "Filters")" class="btn btn-outline-light w-100 mb-2">Filters</a>
+                <a href="@Url.Action("Index", "Trends")" class="btn btn-outline-light w-100 mb-2">Monthly Trends</a>
+
+                <hr />
+                <form method="post" action="@Url.Action("Logout", "Auth")">
+                    <button type="submit" class="btn btn-danger w-100">Logout</button>
+                </form>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-10 p-4">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

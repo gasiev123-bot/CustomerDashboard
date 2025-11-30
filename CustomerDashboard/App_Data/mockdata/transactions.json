@@ -1,0 +1,32 @@
+{
+  "transactions": [
+    {
+      "id": "txn_123456",
+      "date": "2024-09-16T14:30:00Z",
+      "merchant": "Pick n Pay",
+      "category": "Groceries",
+      "amount": 245.80,
+      "description": "Weekly groceries",
+      "paymentMethod": "Credit Card",
+      "icon": "shopping-cart",
+      "categoryColor": "#FF6B6B"
+    },
+    {
+      "id": "txn_123457",
+      "date": "2024-09-15T10:15:00Z",
+      "merchant": "Netflix",
+      "category": "Entertainment",
+      "amount": 199.00,
+      "description": "Monthly subscription",
+      "paymentMethod": "Debit Order",
+      "icon": "film",
+      "categoryColor": "#4ECDC4"
+    }
+  ],
+  "pagination": {
+    "total": 1250,
+    "limit": 20,
+    "offset": 0,
+    "hasMore": true
+  }
+}

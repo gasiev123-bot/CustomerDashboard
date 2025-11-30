@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Financial Goals";
+}
+
+<div class="container-fluid p-4">
+    <h2 class="mb-4">Financial Goals</h2>
+
+    <div id="goalsContainer">
+        <p class="text-muted">Loading goals...</p>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $.get('@Url.Action("GetGoals", "Goals")')
+            .done(function (data) {
+                try {
+                    let html = '<div class="row">';
+
+                    data.Goals.forEach(g => {
+                        let barColor = "bg-success";
+                        if (g.PercentageUsed >= 80 && g.PercentageUsed < 100) barColor = "bg-warning";
+                        else if (g.PercentageUsed >= 100) barColor = "bg-danger";
+
+                        let statusBadge = '';
+                        if (g.Status === "warning") statusBadge = '<span class="badge bg-warning text-dark">Warning</span>';
+                        else if (g.Status === "on_track") statusBadge = '<span class="badge bg-success">On Track</span>';
+
+                        html += `
+    <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">${g.Category} ${statusBadge}</h5>
+                    <p class="card-text">Budget: <strong>${g.MonthlyBudget.toFixed(2)}</strong></p>
+                    <p class="card-text">Spent: <strong>${g.CurrentSpent.toFixed(2)}</strong></p>
+                    <p class="card-text">Days Remaining: <strong>${g.DaysRemaining}</strong></p>
+                    <div class="progress mb-2">
+                        <div class="progress-bar ${barColor}" role="progressbar"
+                             style="width: ${Math.min(g.PercentageUsed, 100)}%">
+                             ${g.PercentageUsed.toFixed(2)}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+                    });
+
+
+                    html += '</div>';
+
+                    $("#goalsContainer").html(html);
+
+                } catch (e) {
+                    $("#goalsContainer").html('<p class="text-danger">Failed to load goals data.</p>');
+                    console.error(e);
+                }
+            })
+            .fail(function () {
+                $("#goalsContainer").html('<p class="text-danger">Failed to load goals data.</p>');
+            });
+    });
+</script>
