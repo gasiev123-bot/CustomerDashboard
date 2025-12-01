@@ -32,21 +32,15 @@ A web-based customer dashboard built with ASP.NET MVC 4.8, showcasing financial 
 1. Open the solution in Visual Studio.
 2. Set `CustomerDashboard` as the startup project.
 3. Press **F5** to run in IIS Express.
-4. Open your browser at `http://localhost:<port>/`.
+4. Open your browser at `http://localhost:44391/`.
 
 ## Running with Docker
-
-1. Build the Docker image:
-
 ```bash
-docker build -t customer-dashboard .
+# Build the Docker image
+docker build -t customer-dashboard:latest ./CustomerDashboard
 
-
-docker run -d -p 8080:80 customer-dashboard
-
-
-## Notes
-
-- Currently uses mock JSON data in `App_Data`.
-- Can be extended to connect to a real database.
-- Session management clears user data on logout/back navigation.
+# Run the container
+docker run -d -p 8080:80 customer-dashboard:latest
+	
+### To access the application run below url
+http://localhost:8080/
