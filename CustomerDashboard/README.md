@@ -27,3 +27,5 @@ docker build -t customer-dashboard:latest ./CustomerDashboard
 # Run the container
 docker run -d -p 8080:80 customer-dashboard:latest
 	
+### To access the application run below url
+http://localhost:8080/

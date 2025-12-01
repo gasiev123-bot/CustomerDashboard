@@ -1,13 +1,11 @@
-﻿# Use official Microsoft IIS image for ASP.NET 4.8
+﻿# Use ASP.NET 4.8 runtime on Windows Server Core
 FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2019
 
-# Set working directory inside container
+# Set the working folder inside the container
 WORKDIR /inetpub/wwwroot
 
-# Copy everything in this folder into the container
+# Copy EVERYTHING from your project folder INTO the container
 COPY . .
 
-# Expose HTTP port
+# Expose port 80 (default for IIS)
 EXPOSE 80
-
-# IIS serves the app automatically from wwwroot
