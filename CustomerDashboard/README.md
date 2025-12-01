@@ -1,25 +1,40 @@
 ﻿# Customer Dashboard
 
-## Overview
-ASP.NET MVC 4.8 application for managing customer financial data, including:
-- Transactions
-- Spending categories
-- Filters
-- Trends & goals
-- User profile and summary
+A web-based customer dashboard built with ASP.NET MVC 4.8, showcasing financial profiles, transactions, spending trends, and goals.
+
+## Features
+
+- Customer Profile Overview
+- Transaction History with Pagination
+- Spending Summary by Category
+- Financial Goals Dashboard
+- Monthly Trends Analysis
+- Login/Logout with Session Management
 
 ## Prerequisites
-- Docker (Windows for .NET Framework 4.8)
+
+- Windows OS (for .NET Framework 4.x)
 - Visual Studio 2019 or later
+- .NET Framework 4.8
+- Docker Desktop (for running Docker container)
 
-## Build & Run
+## Project Structure
 
-### Using Visual Studio
-1. Open `CustomerDashboard.sln` in Visual Studio.
-2. Restore NuGet packages.
-3. Build & run (F5).
+- `Controllers/` → MVC controllers
+- `Views/` → Razor views
+- `Scripts/` → JS libraries
+- `Content/` → CSS, images
+- `App_Data/` → JSON mock data
+- `Dockerfile` → Docker instructions
 
-### Using Docker
+## Running Locally
+
+1. Open the solution in Visual Studio.
+2. Set `CustomerDashboard` as the startup project.
+3. Press **F5** to run in IIS Express.
+4. Open your browser at `http://localhost:44391/`.
+
+## Running with Docker
 ```bash
 # Build the Docker image
 docker build -t customer-dashboard:latest ./CustomerDashboard
